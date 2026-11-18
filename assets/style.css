@@ -5,3 +5,4 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 .skip-link{position:fixed;top:-100px;left:20px;background:var(--ink);color:white;padding:14px 20px;z-index:100;font-size:13px}.skip-link:focus{top:12px}h3[id]{scroll-margin-top:130px}.legal a{color:#b6562d;text-decoration:underline;text-underline-offset:3px}
 .btn{white-space:nowrap}.btn.orange{background:#ba512e}.btn.orange:hover{background:#a94423}@media(max-width:600px){.header .brand small{display:none}.header .wordmark{font-size:15px}.header .btn{font-size:9px}.header .brand{min-width:0}.header .brand img{flex-shrink:0}.header .menu-toggle{flex-shrink:0}}
+@media(max-width:360px){.header .btn{display:none}.header .menu-toggle{margin-left:auto}}
