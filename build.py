@@ -1,6 +1,8 @@
 from pathlib import Path
 from html import escape
+from hashlib import sha256
 ROOT = Path(__file__).parent
+CSS_VERSION = sha256((ROOT/'assets/style.css').read_bytes()).hexdigest()[:10]
 ICONS = {
 'arrow-up-right':'<path d="M5 19 19 5M5 5h14v14"/>',
 'arrow-down':'<path d="M12 4v16m-7-7 7 7 7-7"/>',
@@ -16,7 +18,7 @@ ICONS = {
 'check':'<path d="m5 12 4 4L19 6"/>',
 }
 def icon(name, cls=''):
-    return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[name]}</svg>'
+    return f'<svg class="{cls}" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[name]}</svg>'
 SERVICES = [
 {'slug':'web-development','name':'Разработка сайтов','icon':'code','title':'Сайты, которые работают на ваш бизнес','intro':'Создаём корпоративные сайты, каталоги и веб-порталы. Помогаем представить компанию, упростить взаимодействие с клиентами и развивать цифровые сервисы.','items':['Корпоративные сайты и сайты организаций','Лендинги и сайты мероприятий','Каталоги товаров и услуг','Личные кабинеты и веб-порталы','Обновление и развитие существующих сайтов','Поддержка и сопровождение после запуска'],'cta':'Обсудить разработку сайта','result':'От структуры и интерфейса до запуска','result_text':'Обсудим аудиторию, содержание, нужные интеграции и дальнейшее развитие сайта. Подготовим предложение под вашу задачу.'},
 {'slug':'mobile-apps','name':'Мобильные приложения','icon':'mobile','title':'Ваш бизнес. Ближе к клиенту.','intro':'Разрабатываем мобильные приложения для iOS и Android: для клиентов, сотрудников и партнёров. Связываем мобильный опыт с вашими бизнес-процессами.','items':['Приложения для iOS и Android','Клиентские сервисы и программы лояльности','Внутренние приложения для сотрудников','Личные кабинеты клиентов и партнёров','Интеграция с сайтом и корпоративными системами','Тестирование, запуск и сопровождение'],'cta':'Обсудить приложение','result':'От идеи до повседневного инструмента','result_text':'Определим основные сценарии, необходимые функции и интеграции. Согласуем этапы разработки и условия поддержки.'},
@@ -35,7 +37,7 @@ def header(base=''):
 def footer(base=''):
     return f'''<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-about">{brand(base)}<p>Программные решения, оборудование и поддержка. Технологии для развития вашего бизнеса.</p></div><div><div class="footer-label">Направления</div><div class="footer-links"><a href="{base}services/web-development.html">Разработка программного обеспечения</a><a href="{base}services/servers-storage.html">ИТ-оборудование</a><a href="{base}services/support.html">Внедрение и поддержка</a></div></div><div><div class="footer-label">На связи</div><div class="footer-links"><a href="mailto:Sale@apppartners.kz">Sale@apppartners.kz {icon('arrow-up-right', 'arrow-icon')}</a><span>Астана, проспект Абая, 21<br>Офис 86</span><a href="{base}index.html#contact">Обсудить задачу {icon('arrow-up-right', 'arrow-icon')}</a></div></div></div><div class="footer-bottom"><span>&copy; 2026 ТОО «APP PARTNERS»</span><a href="{base}privacy.html">Конфиденциальность</a><a class="back-to-top" href="#top">Наверх <span>{icon('arrow-up', 'arrow-icon')}</span></a></div></div></footer>'''
 def page(title, description, content, base=''):
-    return f'''<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#12243d"><meta name="robots" content="noindex, nofollow"><title>{escape(title)} | APP PARTNERS</title><meta name="description" content="{escape(description)}"><meta property="og:title" content="{escape(title)} | APP PARTNERS"><meta property="og:description" content="{escape(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><link rel="icon" type="image/svg+xml" href="{base}assets/logo.svg"><link rel="stylesheet" href="{base}assets/style.css"><script src="{base}assets/main.js" defer></script></head><body id="top">{header(base)}<main id="main">{content}</main>{footer(base)}</body></html>'''
+    return f'''<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#12243d"><meta name="robots" content="noindex, nofollow"><title>{escape(title)} | APP PARTNERS</title><meta name="description" content="{escape(description)}"><meta property="og:title" content="{escape(title)} | APP PARTNERS"><meta property="og:description" content="{escape(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><link rel="icon" type="image/svg+xml" href="{base}assets/logo.svg"><link rel="stylesheet" href="{base}assets/style.css?v={CSS_VERSION}"><script src="{base}assets/main.js" defer></script></head><body id="top">{header(base)}<main id="main">{content}</main>{footer(base)}</body></html>'''
 def link(s): return f'<a href="services/{s["slug"]}.html">{s["name"]}<span aria-hidden="true">{icon('arrow-up-right', 'arrow-icon')}</span></a>'
 
 cards=''
